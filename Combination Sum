@@ -1,0 +1,39 @@
+class Solution {
+    
+    private List<List<Integer>> result;
+    
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        result = new ArrayList<>();
+        
+        combinationSum(candidates,0 , target, new ArrayList<>());        
+        
+        return result;
+       
+    }
+    
+    private void combinationSum(int[] candidates, int index, int target, List<Integer> path){
+        
+        //base
+        
+        if(target==0){
+            result.add(new ArrayList<>(path));  //cannot add path, we have to clone path in new list for val
+            return; 
+        }
+        if(target<0 || index==candidates.length){
+            return;
+        }
+    
+       for(int i = index; i < candidates.length; i++){
+          
+           path.add(candidates[i]);  //here we are removing 1 number at a time
+           
+           //slecting i instead of index as we are selecting one at a time and it will again go in for loop 
+           combinationSum(candidates, i, target-candidates[i], path);  
+           
+           path.remove(path.size()-1);  //itself a not choose case
+           
+       }
+        
+    }
+}
